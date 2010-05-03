@@ -11,7 +11,7 @@ module Devry
 
     def extract_time(element)
       return nil if element.nil?
-      Time.parse(element.text.strip)
+      Time.parse(extract_text(element))
     end
 
     def extract_url(element)
@@ -90,7 +90,7 @@ module Devry
 
     def description
       page = fetch_page(url)
-      ["tr:nth-child(11) p", "tr:nth-child(13) p", "tr:nth-child(15) p"].map do |selector|
+      ["tr:nth-child(11)", "tr:nth-child(13)", "tr:nth-child(15)"].map do |selector|
         extract_text page.at(selector)
       end.join("\n\n")
     end
