@@ -5,14 +5,17 @@ module Devry
   module Helpers
 
     def extract_text(element)
+      return nil if element.nil?
       element.text.strip
     end
 
     def extract_time(element)
+      return nil if element.nil?
       Time.parse(element.text.strip)
     end
 
     def extract_url(element)
+      return nil if element.nil?
       element.at("a")['href']
     end
 
