@@ -30,7 +30,7 @@ module Devry
     def extract_description(url)
       page = fetch_page(url)
 
-      selectors = (8..15).map do |tr_index|
+      selectors = (10..15).map do |tr_index|
         "tr:nth-child(#{tr_index})"
       end
 
