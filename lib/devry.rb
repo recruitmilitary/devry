@@ -27,6 +27,18 @@ module Devry
       @agent ||= Mechanize.new
     end
 
+    def extract_description(url)
+      page = fetch_page(url)
+
+      selectors = (8..15).map do |tr_index|
+        "tr:nth-child(#{tr_index})"
+      end
+
+      selectors.map do |selector|
+        page.at(selector).to_s
+      end.join.gsub("\n", "")
+    end
+
   end
 
   class Job
@@ -89,10 +101,7 @@ module Devry
     end
 
     def description
-      page = fetch_page(url)
-      ["tr:nth-child(11)", "tr:nth-child(13)", "tr:nth-child(15)"].map do |selector|
-        extract_text page.at(selector)
-      end.join("\n\n")
+      Devry::Job.extract_description(url)
     end
 
     private
