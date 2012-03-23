@@ -1,4 +1,5 @@
-require 'mechanize'
+require 'open-uri'
+require 'nokogiri'
 
 module Devry
 
@@ -20,11 +21,7 @@ module Devry
     end
 
     def fetch_page(url)
-      agent.get(url)
-    end
-
-    def agent
-      @agent ||= Mechanize.new
+      Nokogiri::HTML open(url)
     end
 
     def extract_description(url)
@@ -51,7 +48,7 @@ module Devry
     def self.all
       page = fetch_page("#{BASE_URI}1")
 
-      page.body =~ /Page (\d+) of (\d+)/
+      page.to_s =~ /Page (\d+) of (\d+)/
       page_count = $2.to_i
 
       jobs  = []
