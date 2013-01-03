@@ -36,6 +36,13 @@ module Devry
       end.join.gsub("\n", "")
     end
 
+    URL_ID_REGEXP = /jobs\/(\d+)\//
+
+    def extract_id(url)
+      url =~ URL_ID_REGEXP
+      $1
+    end
+
   end
 
   class Job
@@ -62,12 +69,14 @@ module Devry
           next if idx == 0 # skip header
 
           details = row.search("td")
+          url = extract_url(details[1])
 
-          job = Job.new(:id    => extract_text(details[0]),
+          job = Job.new(:id    => extract_id(url),
                         :title => extract_text(details[1]),
                         :location => extract_text(details[2]),
                         :posted_date => extract_time(details[3]),
-                        :url => extract_url(details[1]))
+                        :url => url)
+
 
           jobs << job
         end

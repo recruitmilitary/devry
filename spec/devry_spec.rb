@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'spec/spec_helper'
+require 'spec_helper'
 
 describe Devry do
 
@@ -25,7 +25,7 @@ describe Devry do
       end
 
       it 'should extract the id' do
-        @job.id.should == "2010-13545"
+        @job.id.should == "13545"
       end
 
       it 'should extract the title' do
