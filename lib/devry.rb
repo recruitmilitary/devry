@@ -55,8 +55,8 @@ module Devry
     def self.all
       page = fetch_page("#{BASE_URI}1")
 
-      page.to_s =~ /Page (\d+) of (\d+)/
-      page_count = $2.to_i
+      page.to_s =~ /\n\nof (\d+)/m
+      page_count = $1.to_i
 
       jobs  = []
 
