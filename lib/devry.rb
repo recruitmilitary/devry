@@ -57,20 +57,20 @@ module Devry
 
       page.to_s =~ /\n\nof (\d+)/m
       page_count = $1.to_i
-
+      puts "page_count: #{page_count.to_s}"
       jobs  = []
 
-      (1..page_count).each do |page_number|
-
+      (0..page_count-1).each do |page_number|
+        puts "page_number: #{page_number.to_s}"
         page = fetch_page("#{BASE_URI}#{page_number}")
 
         page.search(".iCIMS_JobsTable tr").each_with_index do |row, idx|
 
-          next if idx == 0 # skip header
+          next if idx == 0 || idx == 1 # skip header
 
           details = row.search("td")
           url = extract_url(details[1])
-
+          puts "url for index #{idx.to_s}: #{url}"
           job = Job.new(:id    => extract_id(url),
                         :title => extract_text(details[1]),
                         :location => extract_text(details[2]),
